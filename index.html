@@ -166,11 +166,12 @@
             color: #7b2ffc;
         }
 
-        .link-box .copy-btn {
+        /* Open Button */
+        .link-box .open-btn {
             background: linear-gradient(135deg, #00c8ff, #7b2ffc);
             border: none;
             color: #fff;
-            padding: 8px 22px;
+            padding: 8px 28px;
             border-radius: 50px;
             font-size: 14px;
             font-weight: 600;
@@ -179,14 +180,18 @@
             font-family: 'Cairo', sans-serif;
             white-space: nowrap;
             box-shadow: 0 4px 15px rgba(0, 200, 255, 0.2);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .link-box .copy-btn:hover {
+        .link-box .open-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 25px rgba(0, 200, 255, 0.35);
         }
 
-        .link-box .copy-btn:active {
+        .link-box .open-btn:active {
             transform: scale(0.95);
         }
 
@@ -221,9 +226,10 @@
                 align-items: stretch;
                 text-align: center;
             }
-            .link-box .copy-btn {
+            .link-box .open-btn {
                 width: 100%;
                 text-align: center;
+                justify-content: center;
             }
             .subtitle {
                 font-size: 15px;
@@ -258,8 +264,10 @@
         <!-- Link Box -->
         <div class="link-box">
             <span class="link-icon">🔗</span>
-            <a href="#" class="link-url" id="serverLink">https://hero-hindu-scuba-asn.trycloudflare.com</a>
-            <button class="copy-btn" onclick="copyLink()">📋 Copy Link</button>
+            <span class="link-url" id="serverLink">https://rpd.abu-academy.com/join</span>
+            <a href="#" class="open-btn" id="openLinkBtn" target="_blank">
+                🌐 Open Link
+            </a>
         </div>
 
         <!-- Footer -->
@@ -270,57 +278,11 @@
     </div>
 
     <script>
-        // Copy link functionality
-        function copyLink() {
-            const linkElement = document.getElementById('serverLink');
-            const linkText = linkElement.textContent;
-
-            // Use the modern clipboard API if available
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(linkText).then(() => {
-                    showCopyFeedback('✅ Link copied!');
-                }).catch(() => {
-                    fallbackCopy(linkText);
-                });
-            } else {
-                fallbackCopy(linkText);
-            }
-        }
-
-        function fallbackCopy(text) {
-            // Fallback for older browsers
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.left = '-9999px';
-            textarea.style.top = '-9999px';
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                document.execCommand('copy');
-                showCopyFeedback('✅ Link copied!');
-            } catch (e) {
-                showCopyFeedback('⚠️ Please copy manually');
-            }
-            document.body.removeChild(textarea);
-        }
-
-        function showCopyFeedback(message) {
-            const btn = document.querySelector('.copy-btn');
-            const originalText = btn.textContent;
-            btn.textContent = message;
-            btn.style.background = 'linear-gradient(135deg, #00c851, #00e676)';
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '';
-            }, 2000);
-        }
-
-        // Optional: Change the link dynamically (you can replace the href)
-        document.getElementById('serverLink').addEventListener('click', function(e) {
-            // If you want to allow navigation, remove the preventDefault
-            // e.preventDefault();
-            // window.location.href = this.textContent;
+        // Open link functionality
+        document.getElementById('openLinkBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const linkText = document.getElementById('serverLink').textContent;
+            window.open(linkText, '_blank');
         });
     </script>
 
