@@ -1,10 +1,328 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPD Server - ABU Academy</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0b0e1a 0%, #1a1f35 50%, #0b0e1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
 
-<!-- Cloudflare temporary tunnel -->
-<p>
-    Temporary access:
-    <a href="https://hero-hindu-scuba-asn.trycloudflare.com">
-        https://hero-hindu-scuba-asn.trycloudflare.com
-    </a>
-</p>
+        /* Animated background glow effects */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 200, 255, 0.05) 0%, transparent 60%),
+                        radial-gradient(circle at 70% 60%, rgba(100, 0, 255, 0.05) 0%, transparent 60%);
+            animation: rotateGlow 30s linear infinite;
+            z-index: 0;
+        }
 
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Card Container */
+        .card {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            padding: 50px 45px;
+            max-width: 780px;
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Header / Badge */
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #00c8ff, #7b2ffc);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 200, 255, 0.25);
+        }
+
+        /* Title */
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .title .highlight {
+            background: linear-gradient(135deg, #00c8ff, #7b2ffc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 400;
+            margin-bottom: 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 20px;
+        }
+
+        /* Body Text */
+        .body-text {
+            font-size: 17px;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+
+        .body-text strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Divider */
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #00c8ff, #7b2ffc);
+            border-radius: 10px;
+            margin: 20px 0 25px 0;
+        }
+
+        /* Link Box */
+        .link-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .link-box:hover {
+            border-color: rgba(0, 200, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .link-box .link-icon {
+            font-size: 22px;
+        }
+
+        .link-box .link-url {
+            color: #00c8ff;
+            font-size: 16px;
+            font-weight: 600;
+            word-break: break-all;
+            flex: 1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .link-box .link-url:hover {
+            color: #7b2ffc;
+        }
+
+        .link-box .copy-btn {
+            background: linear-gradient(135deg, #00c8ff, #7b2ffc);
+            border: none;
+            color: #fff;
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0, 200, 255, 0.2);
+        }
+
+        .link-box .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(0, 200, 255, 0.35);
+        }
+
+        .link-box .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Footer */
+        .footer-note {
+            margin-top: 25px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .footer-note span {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .card {
+                padding: 30px 20px;
+            }
+            .title {
+                font-size: 26px;
+            }
+            .body-text {
+                font-size: 15px;
+            }
+            .link-box {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .link-box .copy-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .subtitle {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+
+        <!-- Badge -->
+        <div class="badge">🎮 Exclusive Server</div>
+
+        <!-- Title -->
+        <h1 class="title">
+            RPD Server <span class="highlight">— Powered by ABU Academy</span>
+        </h1>
+        <p class="subtitle">✦ Your gateway to premium gaming &amp; learning</p>
+
+        <!-- Body Text -->
+        <div class="body-text">
+            The management of <strong>ABU Academy</strong> is pleased to offer you its very own 
+            <strong>RPD Server</strong>, specially designed to meet the needs of our educational community. 
+            To join the server and start enjoying the available services, please click the link below 
+            to be directed to the main page, where you will be prompted to enter your 
+            <strong>Username</strong> and <strong>Password</strong> to confirm your access.
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Link Box -->
+        <div class="link-box">
+            <span class="link-icon">🔗</span>
+            <a href="#" class="link-url" id="serverLink">https://hero-hindu-scuba-asn.trycloudflare.com</a>
+            <button class="copy-btn" onclick="copyLink()">📋 Copy Link</button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-note">
+            <span>🛡️</span> Secure access · Powered by ABU Academy <span>✦</span> v2.0
+        </div>
+
+    </div>
+
+    <script>
+        // Copy link functionality
+        function copyLink() {
+            const linkElement = document.getElementById('serverLink');
+            const linkText = linkElement.textContent;
+
+            // Use the modern clipboard API if available
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(linkText).then(() => {
+                    showCopyFeedback('✅ Link copied!');
+                }).catch(() => {
+                    fallbackCopy(linkText);
+                });
+            } else {
+                fallbackCopy(linkText);
+            }
+        }
+
+        function fallbackCopy(text) {
+            // Fallback for older browsers
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            textarea.style.top = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showCopyFeedback('✅ Link copied!');
+            } catch (e) {
+                showCopyFeedback('⚠️ Please copy manually');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function showCopyFeedback(message) {
+            const btn = document.querySelector('.copy-btn');
+            const originalText = btn.textContent;
+            btn.textContent = message;
+            btn.style.background = 'linear-gradient(135deg, #00c851, #00e676)';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 2000);
+        }
+
+        // Optional: Change the link dynamically (you can replace the href)
+        document.getElementById('serverLink').addEventListener('click', function(e) {
+            // If you want to allow navigation, remove the preventDefault
+            // e.preventDefault();
+            // window.location.href = this.textContent;
+        });
+    </script>
+
+</body>
+</html>
